@@ -1,0 +1,23 @@
+server:
+  port: 9099
+  path: localhost
+
+push:
+  appkey: 8679587ed1f47aaac3849c07
+  secret: 21aad53306862650ceaa4d39
+  path: /v3/push
+  host:
+    name: https://api.jpush.cn
+  validate:
+    path:
+apns:
+  production: false
+
+time:
+  to:
+    live:
+    
+logging:
+  level:
+    org:
+      springframework: info
