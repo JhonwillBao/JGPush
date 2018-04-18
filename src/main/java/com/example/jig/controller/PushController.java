@@ -27,6 +27,16 @@ public class PushController {
 	}
 
 	/**
+	 * 推送指定(包括ios和android)
+	 * @param dto
+	 * @return
+	 */
+	@RequestMapping(value="/some", method=RequestMethod.POST)
+	public boolean pushSome(@RequestBody JGPushDTO dto) {
+		return pushService.pushSome(dto.getPushBean(), dto.getRegisterIds());
+	}
+
+	/**
 	 * 推送全部ios
 	 * @param pushBean
 	 * @return
@@ -65,12 +75,12 @@ public class PushController {
 	
 	/**
 	 * 推送指定android
-	 * @param pushBean
+	 * @param dto
 	 * @return
 	 */
 	@RequestMapping(value="/android", method=RequestMethod.POST)
-	public boolean pushAndroid(PushBean pushBean, String[] registerids){
-		return pushService.pushAndroid(pushBean, registerids);
+	public boolean pushAndroid(@RequestBody JGPushDTO dto){
+		return pushService.pushAndroid(dto.getPushBean(), dto.getRegisterIds());
 	}
 
 }

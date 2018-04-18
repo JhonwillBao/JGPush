@@ -1,5 +1,6 @@
 package com.example.jig.service;
 
+import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
@@ -49,11 +50,17 @@ public class JPushService {
 	}
 
 	public boolean pushSome(PushBean pushBean, String ... registids){
+		JsonObject alertJSON = new JsonObject();
+		alertJSON.addProperty("subtitle", pushBean.getSubtitle());
+		alertJSON.addProperty("body", pushBean.getAlert());
 		return sendPush(PushPayload.newBuilder()
 				.setPlatform(Platform.all())
 				.setAudience(Audience.registrationId(registids))
-				.setNotification(Notification.alert(pushBean.getAlert()))
-				.setOptions(Options.newBuilder().setApnsProduction(jPushConfig.getApns()).build())
+				.setNotification(
+						Notification.newBuilder()
+						.addPlatformNotification(((cn.jpush.api.push.model.notification.IosNotification.Builder) IosNotification.newBuilder().setAlert(alertJSON).autoBadge().setContentAvailable(false).setMutableContent(true).addExtras(pushBean.getExtras())).build())
+						.build()
+				).setOptions(Options.newBuilder().setApnsProduction(jPushConfig.getApns()).build())
 				.build());
 	}
 

@@ -31,6 +31,10 @@ public class PushService {
 	public boolean pushAll(PushBean pushBean){
 		return jPushService.pushAll(pushBean);
 	}
+
+	public boolean pushSome(PushBean pushBean, String ... registids){
+		return jPushService.pushAll(pushBean);
+	}
 	
 	/**
 	 * 推送全部ios
